@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "srtMaker", "srtMaker.csproj", "{EBADED09-623C-40F7-96F0-266C6C2242C1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBADED09-623C-40F7-96F0-266C6C2242C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBADED09-623C-40F7-96F0-266C6C2242C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBADED09-623C-40F7-96F0-266C6C2242C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBADED09-623C-40F7-96F0-266C6C2242C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CCCF817C-A7E0-46E6-AED0-62F1B220B65C}
+	EndGlobalSection
+EndGlobal
