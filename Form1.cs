@@ -9,7 +9,9 @@ namespace srtMaker
     public partial class Form1 : Form
     {
         private Font selectedFont = null;
+        private string selectedFontPath = null;
         private Dictionary<string, Font> fontDict = new Dictionary<string, Font>();
+        private Dictionary<string, string> fontPathDict = new Dictionary<string, string>();
         public Form1()
         {
             InitializeComponent();
@@ -21,9 +23,16 @@ namespace srtMaker
         {
             try
             {
+                int fontSize;
+                var success = int.TryParse(fontSizeInput.Text, out fontSize);
+                if (!success)
+                {
+                    alert("类型错误!", "字体大小必须为数字!");
+                    return null;
+                }
                 PrivateFontCollection pfc = new PrivateFontCollection();
                 pfc.AddFontFile(path);
-                Font font = new Font(pfc.Families[0], 10);
+                Font font = new Font(pfc.Families[0], fontSize);
                 return font;
             }
             catch (Exception ex)
@@ -73,11 +82,22 @@ namespace srtMaker
                 alert("类型错误!", "限制行数必须为数字!");
                 return;
             }
+            int fontSize;
+            success = int.TryParse(fontSizeInput.Text, out fontSize);
+            if (!success)
+            {
+                alert("类型错误!", "字体大小必须为数字!");
+                return;
+            }
             var start = 0;
             //contentOutput.SelectionFont = loadFont();
             if(contentOutput.Font.Name != selectedFont.Name)
             {
                 contentOutput.Font = selectedFont;
+            }
+            if(contentOutput.Font.Size != fontSize)
+            {
+                contentOutput.Font = loadFont(selectedFontPath);
             }
             string content = contentInput.Text;
             var lines = content.Split(Environment.NewLine);
@@ -151,6 +171,7 @@ namespace srtMaker
                 var font = loadFont(file);
                 var name = id + ":" + font.Name;
                 fontDict[name] = font;
+                fontPathDict[name] = file;
                 if (font != null)
                 {
                     id++;
@@ -166,6 +187,7 @@ namespace srtMaker
             if (selected != null)
             {
                 selectedFont = fontDict[selected.ToString()];
+                selectedFontPath = fontPathDict[selected.ToString()];
             }
             makeContentOutput();
         }

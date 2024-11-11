@@ -43,6 +43,8 @@
             fontSelect = new ComboBox();
             label6 = new Label();
             contentOutput = new RichTextBox();
+            label7 = new Label();
+            fontSizeInput = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -96,7 +98,7 @@
             subtitleWidthInput.Name = "subtitleWidthInput";
             subtitleWidthInput.Size = new Size(52, 23);
             subtitleWidthInput.TabIndex = 5;
-            subtitleWidthInput.Text = "200";
+            subtitleWidthInput.Text = "400";
             subtitleWidthInput.TextChanged += onConfigsInputChange;
             // 
             // label4
@@ -157,16 +159,16 @@
             // fontSelect
             // 
             fontSelect.FormattingEnabled = true;
-            fontSelect.Location = new Point(74, 66);
+            fontSelect.Location = new Point(167, 66);
             fontSelect.Name = "fontSelect";
-            fontSelect.Size = new Size(238, 25);
+            fontSelect.Size = new Size(145, 25);
             fontSelect.TabIndex = 14;
             fontSelect.SelectedIndexChanged += onFontSelectChange;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(12, 69);
+            label6.Location = new Point(105, 69);
             label6.Name = "label6";
             label6.Size = new Size(56, 17);
             label6.TabIndex = 15;
@@ -185,11 +187,31 @@
             contentOutput.Text = "";
             contentOutput.WordWrap = false;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(12, 69);
+            label7.Name = "label7";
+            label7.Size = new Size(56, 17);
+            label7.TabIndex = 17;
+            label7.Text = "字体大小";
+            // 
+            // fontSizeInput
+            // 
+            fontSizeInput.Location = new Point(74, 66);
+            fontSizeInput.Name = "fontSizeInput";
+            fontSizeInput.Size = new Size(25, 23);
+            fontSizeInput.TabIndex = 18;
+            fontSizeInput.Text = "10";
+            fontSizeInput.TextChanged += onConfigsInputChange;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(912, 288);
+            Controls.Add(fontSizeInput);
+            Controls.Add(label7);
             Controls.Add(contentOutput);
             Controls.Add(label6);
             Controls.Add(fontSelect);
@@ -228,5 +250,7 @@
         private ComboBox fontSelect;
         private Label label6;
         private RichTextBox contentOutput;
+        private Label label7;
+        private TextBox fontSizeInput;
     }
 }
