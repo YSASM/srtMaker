@@ -119,7 +119,7 @@ namespace srtMaker
                     var linesLangthCount = 0;
                     foreach (var c in line)
                     {
-                        var cWidth = TextRenderer.MeasureText(c + "", selectedFont).Width;
+                        var cWidth = TextRenderer.MeasureText(c + "", contentOutput.Font).Width;
                         if ((lineWidth + cWidth) > subtitleWidth)
                         {
                             linesLangthCount++;
