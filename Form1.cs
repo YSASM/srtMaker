@@ -192,7 +192,7 @@ namespace srtMaker
             makeContentOutput();
         }
 
-        private void alert(string title, string message)
+        private void alert(string message, string title)
         {
             MessageBox.Show(title, message);
         }
