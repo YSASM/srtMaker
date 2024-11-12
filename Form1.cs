@@ -1,9 +1,5 @@
 using System.Drawing.Text;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-
+using System.Diagnostics;
 namespace srtMaker
 {
     public partial class Form1 : Form
@@ -52,6 +48,13 @@ namespace srtMaker
             return time.ToString("hh\\:mm\\:ss") + ",000";
         }
 
+        private float getCharRealWidth(char c,Font font)
+        {
+            Size sif = TextRenderer.MeasureText(c+"", font, new Size(0, 0), TextFormatFlags.NoPadding);
+            Trace.WriteLine(c+":"+sif.Width);
+            return sif.Width;
+        }
+
         private void makeContentOutput()
         {
             int duration;
@@ -68,8 +71,8 @@ namespace srtMaker
                 alert("类型错误!", "字幕条数必须为数字!");
                 return;
             }
-            int subtitleWidth;
-            success = int.TryParse(subtitleWidthInput.Text, out subtitleWidth);
+            float subtitleWidth;
+            success = float.TryParse(subtitleWidthInput.Text, out subtitleWidth);
             if (!success)
             {
                 alert("类型错误!", "换行宽度必须为数字!");
@@ -82,22 +85,18 @@ namespace srtMaker
                 alert("类型错误!", "限制行数必须为数字!");
                 return;
             }
-            int fontSize;
-            success = int.TryParse(fontSizeInput.Text, out fontSize);
-            if (!success)
-            {
-                alert("类型错误!", "字体大小必须为数字!");
-                return;
-            }
             var start = 0;
             //contentOutput.SelectionFont = loadFont();
-            if(contentOutput.Font.Name != selectedFont.Name)
+            var nowFont = loadFont(selectedFontPath);
+            try
             {
-                contentOutput.Font = selectedFont;
-            }
-            if(contentOutput.Font.Size != fontSize)
+                if (contentOutput.Font.Name != nowFont.Name || contentOutput.Font.Size != nowFont.Size)
+                {
+                    contentOutput.Font = nowFont;
+                }
+            }catch(Exception ex)
             {
-                contentOutput.Font = loadFont(selectedFontPath);
+                contentOutput.Font = nowFont;
             }
             string content = contentInput.Text;
             var lines = content.Split(Environment.NewLine);
@@ -115,11 +114,11 @@ namespace srtMaker
                     sentence += count + Environment.NewLine;
                     sentence += convertSecondsToHMS(start) + " --> " + convertSecondsToHMS(end) + Environment.NewLine;
                     var formatSentence = "";
-                    var lineWidth = 0;
+                    float lineWidth = 0;
                     var linesLangthCount = 0;
                     foreach (var c in line)
                     {
-                        var cWidth = TextRenderer.MeasureText(c + "", contentOutput.Font).Width;
+                        var cWidth = getCharRealWidth(c, nowFont);
                         if ((lineWidth + cWidth) > subtitleWidth)
                         {
                             linesLangthCount++;
@@ -170,7 +169,6 @@ namespace srtMaker
             {
                 var font = loadFont(file);
                 var name = id + ":" + font.Name;
-                fontDict[name] = font;
                 fontPathDict[name] = file;
                 if (font != null)
                 {
@@ -186,7 +184,6 @@ namespace srtMaker
             var selected = fontSelect.SelectedItem;
             if (selected != null)
             {
-                selectedFont = fontDict[selected.ToString()];
                 selectedFontPath = fontPathDict[selected.ToString()];
             }
             makeContentOutput();
